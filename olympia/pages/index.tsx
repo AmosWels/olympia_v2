@@ -1,14 +1,11 @@
 import * as React from "react";
 import { withFormik, FormikProps } from "formik";
+// import { Formik, Field, ErrorMessage, FormikProps } from "formik";
 import * as Yup from "yup";
 import Link from 'next/link';
-// import {LoginDetails, LoginPassword} from "../styles/InputLayout";
-// import Input from "../styles/Input";
-// import {LabelEmail, LabelPassword }from "../styles/Label";
 import Layout from "../components/Layout";
 import { Form, Button } from 'react-bootstrap';
 import FormBox from "../components/formBox";
-
 
 // import logo from "../static/ologo.jpeg";
 
@@ -28,12 +25,12 @@ interface MyFormProps {
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     const {
-        // values,
+        values,
         // errors,
         // touched,
-        // handleChange,
-        // handleBlur,
-        // handleSubmit,
+        handleChange,
+        handleBlur,
+        handleSubmit,
         // isSubmitting,
         title
     } = props;
@@ -41,32 +38,44 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     return (
         <Layout>
             <FormBox>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                        <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                        </Form.Text>
+                        <Form.Label>Email addresss</Form.Label>
+                        <Form.Control 
+                            type="email" 
+                            placeholder="Enter email" 
+                            // onChange={handleChange}
+                            // onBlur={handleBlur}
+                            // value={values.email}
+                             />
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
+                        <Form.Control 
+                            type="password" 
+                            placeholder="Password"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password} />
                     </Form.Group>
-                    <Button variant="outline-secondary" type="submit">
+                    <Button 
+                        variant="outline-secondary" 
+                        type="submit"
+                    //     disabled={
+                    //     isSubmitting ||
+                    //     !!(errors.email && touched.email) ||
+                    //     !!(errors.password && touched.password)
+                    // }
+                    >
                         Submit
-                    </Button>
+                    </Button><br/>
                     <Link href="/register">
                         <a>Register</a>
                     </Link>
                 </Form>
             </FormBox>
-             {/* <img src={logo} className="app-logo" alt="logo" /> */}
-             {/* <img src="../static/ologo.jpeg" /> */}
             <h1>{title}</h1>
-            {/* <LoginDetails> */}
-            {/* </LoginDetails> */}
         </Layout>
     );
 };

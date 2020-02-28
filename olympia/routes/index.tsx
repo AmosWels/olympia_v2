@@ -1,7 +1,6 @@
 const ROUTES = {
     home: '/',
-    register: '/signup',
-    dashboard: '/dashboard',
+    register: '/register',
 }
 
 export default ROUTES;
