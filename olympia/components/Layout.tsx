@@ -7,7 +7,6 @@ type Props = {
 }
 
 const Layout: React.FunctionComponent<Props> = ({
-  children,
   title = 'This is the default title',
 }) => (
   <div>
@@ -31,7 +30,7 @@ const Layout: React.FunctionComponent<Props> = ({
         </Link> */}
       </nav>
     </header>
-    {children}
+    {/* {children} */}
     <footer>
       <hr />
       <span>I'm here to stay (Footer)</span>

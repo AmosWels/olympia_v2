@@ -22,7 +22,7 @@ type Props = {
     placeholder: string,
     options: Options[],
     children: string,
-    placeholderValue?: string,
+    placeholderValue: string,
     required: string,
   }
 export const SelectInput :React.FunctionComponent<Props> = ({
@@ -47,7 +47,7 @@ export const SelectInput :React.FunctionComponent<Props> = ({
       <select
         name={name}
         id={id}
-        className={selectInputClassName}
+        // className={selectInputClassName}
         value={value}
         onChange={onChange}
         {...otherProps}
