@@ -107,7 +107,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
-                    <Button variant="outline-secondary" type="submit">Submit form</Button>
+                    <Button variant="outline-secondary" type="submit">Submit form</Button><br/>
                     <Link href="/">
                         <a>Back to Login</a>
                     </Link>
