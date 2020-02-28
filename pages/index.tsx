@@ -25,11 +25,11 @@ interface MyFormProps {
 
 const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     const {
-        values,
-        // errors,
-        // touched,
-        handleChange,
-        handleBlur,
+        // values,
+        // // errors,
+        // // touched,
+        // handleChange,
+        // handleBlur,
         handleSubmit,
         // isSubmitting,
         title
@@ -55,9 +55,10 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                         <Form.Control 
                             type="password" 
                             placeholder="Password"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.password} />
+                            // onChange={handleChange}
+                            // onBlur={handleBlur}
+                            // value={values.password} 
+                            />
                     </Form.Group>
                     <Button 
                         variant="outline-secondary" 
