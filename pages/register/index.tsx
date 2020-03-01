@@ -36,8 +36,8 @@ const Signup: React.FunctionComponent = () => (
             <RegisterComponent>
                 {register => (
                     <Formik
-                        onSubmit={async (data, {setSubmitting, resetForm, setErrors}) => {
-                            setSubmitting(true)
+                        onSubmit={async data => {
+                            console.log('>>', 'response');
                             try {
                                 const response =  await register({
                                     variables: data
@@ -45,22 +45,8 @@ const Signup: React.FunctionComponent = () => (
                                 console.log('>>', response);
                                 alert(JSON.stringify('Created Succesfully'));
                                 Router.push("/");
-                                resetForm()
-                                setSubmitting(false)
                             } catch (error) {
-                                const errors =
-                                    (error.graphQLErrors[0] &&
-                                        error.graphQLErrors[0].validationErrors) ||
-                                    [];
-                                const validationErrors = errors.reduce(
-                                    (obj: any, err: { property: string; constraints: string }) => {
-                                        obj[err.property] = Object.values(err.constraints)[0];
-                                        return obj;
-                                    },
-                                    {}
-                                    );
-                                setErrors(validationErrors);
-                                console.error(error);
+                                alert(JSON.stringify('Not created, User Already Exists', error));
                             }
                         }
               }
