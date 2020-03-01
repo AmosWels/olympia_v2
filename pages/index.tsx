@@ -62,7 +62,8 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                     </Form.Group>
                     <Button 
                         variant="outline-secondary" 
-                        type="submit"
+                        // type="submit"
+                        href="/home"
                     //     disabled={
                     //     isSubmitting ||
                     //     !!(errors.email && touched.email) ||
