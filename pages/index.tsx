@@ -6,6 +6,8 @@ import Link from 'next/link';
 import Layout from "../components/Layout";
 import { Form, Button } from 'react-bootstrap';
 import FormBox from "../components/formBox";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
 
 // import logo from "../static/ologo.jpeg";
 
@@ -77,6 +79,29 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                     </Link>
                 </Form>
             </FormBox>
+            <Mutation
+        mutation={gql`
+        mutation login {
+            login(email:"amos@gmail.com", password:"amos123"){
+              email
+              password
+              token
+              firstname
+            }
+          }
+        `}
+      >
+        {(mutate: () => void) => (
+          <button
+            onClick={async () => {
+              const response = await mutate();
+              console.log(response);
+            }}
+          >
+            call login mutation
+          </button>
+        )}
+      </Mutation>
             <h1>{title}</h1>
         </Layout>
     );
