@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FormikProps, Formik } from "formik";
+import Router from "next/router";
 // import * as Yup from "yup";
 // import { graphql } from 'react-apollo'
 
@@ -17,67 +18,62 @@ import FormBox from "../../components/formBox";
 // import Router from "next/router";
 import { title } from "process";
 import { registerSchema } from "../../utils/validationSchemas";
+import { RegisterComponent } from "../../generated/apolloComponents";
 // import console = require("console");
 
 interface IRegisterFormValues {
     password: string;
+    confirmPassword: string;
     firstname: string;
     surname: string;
     email: string;
-    confirmPassword: string;
     gender: string;
 }
 
 const Signup: React.FunctionComponent = () => (
-    <Layout>
+    <Layout title="SignUp Page">
         <FormBox>
-            {/* {() => ( */}
-            <Formik
+            <RegisterComponent>
+                {register => (
+                    <Formik
+                        onSubmit={async (data, {setSubmitting, resetForm, setErrors}) => {
+                            setSubmitting(true)
+                            try {
+                                const response =  await register({
+                                    variables: data
+                                });
+                                console.log('>>', response);
+                                alert(JSON.stringify('Created Succesfully'));
+                                Router.push("/");
+                                resetForm()
+                                setSubmitting(false)
+                            } catch (error) {
+                                const errors =
+                                    (error.graphQLErrors[0] &&
+                                        error.graphQLErrors[0].validationErrors) ||
+                                    [];
+                                const validationErrors = errors.reduce(
+                                    (obj: any, err: { property: string; constraints: string }) => {
+                                        obj[err.property] = Object.values(err.constraints)[0];
+                                        return obj;
+                                    },
+                                    {}
+                                    );
+                                setErrors(validationErrors);
+                                console.error(error);
+                            }
+                        }
+              }
                 validationSchema={registerSchema}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
-                    console.log('>>', values)
-                    setSubmitting(true);
-                    resetForm();
-                    setSubmitting(false);
-
-                }}
-                // onSubmit={(data) => {
-                //     console.log('>>', data)
-                // try {
-                //     await register({
-                //         variables: {
-                //             data
-                //         }
-                //     });
-
-                //     Router.push("/");
-                // } catch (error) {
-                //     const errors =
-                //         (error.graphQLErrors[0] &&
-                //             error.graphQLErrors[0].validationErrors) ||
-                //         [];
-
-                //     const validationErrors = errors.reduce(
-                //         (obj: any, err: { property: string; constraints: string }) => {
-                //             obj[err.property] = Object.values(err.constraints)[0];
-                //             return obj;
-                //         },
-                //         {}
-                //     );
-
-                //     setErrors(validationErrors);
-                //     console.error(error);
-                // }
-                // }}
                 initialValues={{
                     surname: "",
                     firstname: "",
                     password: "",
-                    confirmPassword: "",
                     email: "",
-                    gender: ""
+                    gender: "",
+                    confirmPassword: ""
                 }}
-            >
+                >
                 {({
                     values,
                     errors,
@@ -90,7 +86,7 @@ const Signup: React.FunctionComponent = () => (
                         <Form onSubmit={handleSubmit}>
                             <Form.Row>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                    <Form.Label>First name</Form.Label>
+                                    <Form.Label className="required">First name</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="First name "
@@ -106,7 +102,7 @@ const Signup: React.FunctionComponent = () => (
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                    <Form.Label>Surname</Form.Label>
+                                    <Form.Label className="required">Surname</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="First surname "
@@ -124,7 +120,7 @@ const Signup: React.FunctionComponent = () => (
                             </Form.Row>
                             <Form.Row>
                                 <Form.Group as={Col} md="6" controlId="validationCustom01">
-                                    <Form.Label>Email</Form.Label>
+                                    <Form.Label className="required">Email</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter email"
@@ -140,14 +136,14 @@ const Signup: React.FunctionComponent = () => (
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group controlId="exampleForm.ControlSelect1">
-                                    <Form.Label> Gender</Form.Label>
+                                    <Form.Label className="required"> Gender</Form.Label>
                                     <Form.Control as="select"
                                         defaultValue={title}
                                         name="gender"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         value={values.gender}
-                                        className={touched.gender && errors.gender ? "error" : null}
+                                        className={touched.gender && errors.gender ? 'error gender' : 'gender'}
                                     >
                                         <option value="" label="Select Gender" />
                                         <option value="Male">Male</option>
@@ -161,7 +157,7 @@ const Signup: React.FunctionComponent = () => (
                             </Form.Row>
                             <Form.Row>
                                 <Form.Group as={Col} md="6" controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
+                                    <Form.Label className="required">Password</Form.Label>
                                     <Form.Control
                                         type="password"
                                         placeholder="Enter password"
@@ -177,7 +173,7 @@ const Signup: React.FunctionComponent = () => (
                                     ) : null}
                                 </Form.Group>
                                 <Form.Group as={Col} md="6" controlId="formBasicPassword">
-                                    <Form.Label>Confirm Password</Form.Label>
+                                    <Form.Label className="required">Confirm Password</Form.Label>
                                     <Form.Control
                                         type="password"
                                         placeholder="Repeat password "
@@ -192,18 +188,20 @@ const Signup: React.FunctionComponent = () => (
                                         <div className="error-message">{errors.confirmPassword}</div>
                                     ) : null}
                                 </Form.Group>
-                            </Form.Row><br/>
+                            </Form.Row><br />
                             <Form.Row>
-                            <Button variant="outline-secondary" type="submit" disabled={isSubmitting}>Submit</Button><br />
+                                <Button className="buttonHolder" variant="outline-secondary" type="submit" disabled={isSubmitting}>Submit</Button>
                             </Form.Row>
                             <Link href="/">
-                                <a>Back to Login</a>
+                                <a className="text-position">Back to Login</a>
                             </Link>
                         </Form>
                     )}
             </Formik>
+            )}
+            </RegisterComponent>
         </FormBox>
-    </Layout>
+    </Layout >
 );
 
 export default Signup;

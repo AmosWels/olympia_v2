@@ -6,10 +6,8 @@ import Link from 'next/link';
 import Layout from "../components/Layout";
 import { Form, Button } from 'react-bootstrap';
 import FormBox from "../components/formBox";
-import { Mutation } from "react-apollo";
-import gql from "graphql-tag";
+import { LoginComponent } from "../generated/apolloComponents";
 
-// import logo from "../static/ologo.jpeg";
 
 interface FormValues {
     email: string;
@@ -42,7 +40,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
             <FormBox>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email addresss</Form.Label>
+                        <Form.Label className="required">Email addresss</Form.Label>
                         <Form.Control 
                             type="email" 
                             placeholder="Enter email" 
@@ -53,7 +51,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label className="required">Password</Form.Label>
                         <Form.Control 
                             type="password" 
                             placeholder="Password"
@@ -63,6 +61,7 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                             />
                     </Form.Group>
                     <Button 
+                        className="buttonHolder"
                         variant="outline-secondary" 
                         // type="submit"
                         href="/home"
@@ -75,33 +74,22 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
                         Submit
                     </Button><br/>
                     <Link href="/register">
-                        <a>Register</a>
+                        <a className="text-position">Register</a>
                     </Link>
                 </Form>
             </FormBox>
-            <Mutation
-        mutation={gql`
-        mutation login {
-            login(email:"amos@gmail.com", password:"amos123"){
-              email
-              password
-              token
-              firstname
-            }
-          }
-        `}
-      >
-        {(mutate: () => void) => (
-          <button
-            onClick={async () => {
-              const response = await mutate();
-              console.log(response);
-            }}
-          >
-            call login mutation
-          </button>
-        )}
-      </Mutation>
+        <LoginComponent>
+        {(mutate => {
+                    return (<button onClick={async () => {
+                        const response = await mutate({
+                            variables: { email: "gfgh@dfgh.com", password: "gfdfg" }
+                        });
+                        console.log(response);
+                    } }>
+                        call login mutation
+                    </button>);
+        })}
+      </LoginComponent>
             <h1>{title}</h1>
         </Layout>
     );

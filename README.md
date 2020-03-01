@@ -23,3 +23,16 @@ yarn
 yarn dev
 ```
 
+- NB
+```
+Incase you are having trouble running the gql-gen init, try adding npx then run it. 
+
+- npx gql-gen init
+```
+
+```
+When npm run generate returns errors, run this comman below for each of the plugins in the codegen.yml
+
+e.g graphql-codegen-typescript-common
+```
+
