@@ -12,7 +12,17 @@ const FormBox = styled.div`
     box-shadow: 0 4px 15px rgba(0,0,0,.25);
     border-radius: 25px;
 
-    
+    .error {
+        border: 2px solid #FF6565;
+        }
+
+    .error-message {
+    color: #FF6565;
+    padding: .5em .2em;
+    height: 1em;
+    position: absolute;
+    font-size: .8em;
+}
 `;
 
 export default FormBox;
