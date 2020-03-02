@@ -4,8 +4,10 @@ import {
     NormalizedCacheObject
   } from "apollo-boost";
   import { setContext } from "apollo-link-context";
+  import { onError } from "apollo-link-error";
   import { createHttpLink } from "apollo-link-http";
   import fetch from "isomorphic-unfetch";
+  import Router from "next/router";
   import { isBrowser } from "./isBrowser";
   
   let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
@@ -21,8 +23,22 @@ import {
   
   function create(initialState: any, { getToken }: Options) {
     const httpLink = createHttpLink({
-      uri: "http://localhost:4000/",
+      uri: "https://olympia-api.herokuapp.com/",
       credentials: "include"
+    });
+
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors)
+        graphQLErrors.map(({ message, locations, path }) => {
+          console.log(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+          );
+  
+          if (isBrowser && message.includes("Please Login Again!")) {
+            Router.replace("/");
+          }
+        });
+      if (networkError) console.log(`[Network error]: ${networkError}`);
     });
   
     const authLink = setContext((_, { headers }) => {
@@ -30,7 +46,8 @@ import {
       return {
         headers: {
           ...headers,
-          cookie: token ? `qid=${token}` : ""
+          // cookie: token ? `qid=${token}` : "",
+          authorization: token ? `Bearer ${token}` : ""
         }
       };
     });
@@ -39,7 +56,7 @@ import {
     return new ApolloClient({
       connectToDevTools: isBrowser,
       ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-      link: authLink.concat(httpLink),
+      link: errorLink.concat(authLink.concat(httpLink)),
       cache: new InMemoryCache().restore(initialState || {})
     });
   }

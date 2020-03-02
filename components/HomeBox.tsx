@@ -12,7 +12,36 @@ const HomeBox = styled.div`
     box-shadow: 0 4px 15px rgba(0,0,0,.25);
     border-radius: 25px;
 
-    
+    .buttonHolder {
+        display: block;
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .ListHolder {
+        display: block;
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    .BadgeHolder {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        font-size:16px;
+    }
+    .uniqueText{
+        text-align: center;
+        color: black;
+        text-transform: uppercase;
+        padding: 1px;
+        font-family: 'Raleway', cursive;
+        font-weight: 10;
+        background: -webkit-linear-gradient(left, grey, #eee, grey);
+        background: -moz-linear-gradient(left, grey, #eee, grey);
+        background: -ms-linear-gradient(left, grey, #eee, grey);
+        background: -o-linear-gradient(left, grey, #eee, grey);
+    }
 `;
 
 export default HomeBox;

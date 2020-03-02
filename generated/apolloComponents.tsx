@@ -38,6 +38,17 @@ export type RegisterMutation = (
   )> }
 );
 
+export type ProfileQueryVariables = {};
+
+
+export type ProfileQuery = (
+  { __typename?: 'Query' }
+  & { profile: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'firstname' | 'surname' | 'email' | 'gender'>
+  )> }
+);
+
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -231,6 +242,34 @@ export function withRegister<TProps, TChildProps = {}>(operationOptions?: Apollo
 };
 export type RegisterMutationResult = ApolloReactCommon.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const ProfileDocument = gql`
+    query profile {
+  profile {
+    firstname
+    surname
+    email
+    gender
+  }
+}
+    `;
+export type ProfileComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<ProfileQuery, ProfileQueryVariables>, 'query'>;
+
+    export const ProfileComponent = (props: ProfileComponentProps) => (
+      <ApolloReactComponents.Query<ProfileQuery, ProfileQueryVariables> query={ProfileDocument} {...props} />
+    );
+    
+export type ProfileProps<TChildProps = {}> = ApolloReactHoc.DataProps<ProfileQuery, ProfileQueryVariables> & TChildProps;
+export function withProfile<TProps, TChildProps = {}>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  ProfileQuery,
+  ProfileQueryVariables,
+  ProfileProps<TChildProps>>) {
+    return ApolloReactHoc.withQuery<TProps, ProfileQuery, ProfileQueryVariables, ProfileProps<TChildProps>>(ProfileDocument, {
+      alias: 'profile',
+      ...operationOptions
+    });
+};
+export type ProfileQueryResult = ApolloReactCommon.QueryResult<ProfileQuery, ProfileQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string,

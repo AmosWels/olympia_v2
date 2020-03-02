@@ -38,6 +38,10 @@ const FormBox = styled.div`
         margin-left: 165px;
     }
 
+    .text-position-login {
+        margin-left: 183px;
+    }
+
     .required:after {
         content:" * ";
         color: red;
