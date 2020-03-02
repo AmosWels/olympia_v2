@@ -84,7 +84,7 @@ function create(initialState, _ref) {
     return {
       headers: _objectSpread({}, headers, {
         // cookie: token ? `qid=${token}` : "",
-        authorization: token ? "Bearer ".concat(token) : ""
+        authorization: token ? "".concat(token) : ""
       })
     };
   }); // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
@@ -189,18 +189,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/createClass */ "./node_modules/@babel/runtime-corejs2/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/inherits */ "./node_modules/@babel/runtime-corejs2/helpers/esm/inherits.js");
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! cookie */ "./node_modules/cookie/index.js");
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(cookie__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! next/head */ "./node_modules/next/dist/next-server/lib/head.js");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/lib/react-apollo.esm.js");
-/* harmony import */ var _initApollo__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./initApollo */ "./lib/initApollo.ts");
-/* harmony import */ var _isBrowser__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./isBrowser */ "./lib/isBrowser.ts");
-/* harmony import */ var _redirect__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./redirect */ "./lib/redirect.ts");
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! next/head */ "./node_modules/next/dist/next-server/lib/head.js");
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/lib/react-apollo.esm.js");
+/* harmony import */ var _initApollo__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./initApollo */ "./lib/initApollo.ts");
+/* harmony import */ var _isBrowser__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./isBrowser */ "./lib/isBrowser.ts");
+/* harmony import */ var _redirect__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./redirect */ "./lib/redirect.ts");
 
 
 
@@ -217,7 +215,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _jsxFileName = "/Users/amoswelike/projects/olympia_v2/lib/withApollo.tsx";
-var __jsx = react__WEBPACK_IMPORTED_MODULE_18___default.a.createElement;
+var __jsx = react__WEBPACK_IMPORTED_MODULE_17___default.a.createElement;
 
 function ownKeys(object, enumerableOnly) { var keys = _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_5___default()(object); if (_babel_runtime_corejs2_core_js_object_get_own_property_symbols__WEBPACK_IMPORTED_MODULE_4___default.a) { var symbols = _babel_runtime_corejs2_core_js_object_get_own_property_symbols__WEBPACK_IMPORTED_MODULE_4___default()(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return _babel_runtime_corejs2_core_js_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_3___default()(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -231,10 +229,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-
-function parseCookies(req) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return cookie__WEBPACK_IMPORTED_MODULE_15___default.a.parse(req ? req.headers.cookie || "" : document.cookie, options);
+function getToken() {
+  return JSON.parse(localStorage.getItem('token'));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (function (App) {
@@ -246,17 +242,14 @@ function parseCookies(req) {
     Object(_babel_runtime_corejs2_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_12__["default"])(WithData, null, [{
       key: "getInitialProps",
       value: function getInitialProps(ctx) {
-        var Component, router, _ctx$ctx, req, res, apollo, appProps, apolloState;
-
+        var Component, router, res, apollo, appProps, apolloState;
         return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.async(function getInitialProps$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                Component = ctx.Component, router = ctx.router, _ctx$ctx = ctx.ctx, req = _ctx$ctx.req, res = _ctx$ctx.res;
-                apollo = Object(_initApollo__WEBPACK_IMPORTED_MODULE_20__["default"])({}, {
-                  getToken: function getToken() {
-                    return parseCookies(req).token;
-                  }
+                Component = ctx.Component, router = ctx.router, res = ctx.ctx.res;
+                apollo = Object(_initApollo__WEBPACK_IMPORTED_MODULE_19__["default"])({}, {
+                  getToken: getToken
                 });
                 ctx.ctx.apolloClient = apollo;
                 appProps = {};
@@ -281,20 +274,20 @@ function parseCookies(req) {
                 return _context.abrupt("return", {});
 
               case 10:
-                if (_isBrowser__WEBPACK_IMPORTED_MODULE_21__["isBrowser"]) {
+                if (_isBrowser__WEBPACK_IMPORTED_MODULE_20__["isBrowser"]) {
                   _context.next = 21;
                   break;
                 }
 
                 _context.prev = 11;
                 _context.next = 14;
-                return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.awrap(Object(react_apollo__WEBPACK_IMPORTED_MODULE_19__["getDataFromTree"])(__jsx(App, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_7__["default"])({}, appProps, {
+                return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_6___default.a.awrap(Object(react_apollo__WEBPACK_IMPORTED_MODULE_18__["getDataFromTree"])(__jsx(App, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_7__["default"])({}, appProps, {
                   Component: Component,
                   router: router,
                   apolloClient: apollo,
                   __source: {
                     fileName: _jsxFileName,
-                    lineNumber: 57
+                    lineNumber: 48
                   },
                   __self: this
                 }))));
@@ -312,13 +305,13 @@ function parseCookies(req) {
                 console.error("Error while running `getDataFromTree`", _context.t0);
 
                 if (_context.t0.message.includes("Please Login Again!")) {
-                  Object(_redirect__WEBPACK_IMPORTED_MODULE_22__["default"])(ctx.ctx, "/");
+                  Object(_redirect__WEBPACK_IMPORTED_MODULE_21__["default"])(ctx.ctx, "/");
                 }
 
               case 20:
                 // getDataFromTree does not call componentWillUnmount
                 // head side effect therefore need to be cleared manually
-                next_head__WEBPACK_IMPORTED_MODULE_16___default.a.rewind();
+                next_head__WEBPACK_IMPORTED_MODULE_15___default.a.rewind();
 
               case 21:
                 // Extract query data from the Apollo's store
@@ -346,10 +339,8 @@ function parseCookies(req) {
 
       Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_14__["default"])(Object(_babel_runtime_corejs2_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_11__["default"])(_this), "apolloClient", void 0);
 
-      _this.apolloClient = Object(_initApollo__WEBPACK_IMPORTED_MODULE_20__["default"])(props.apolloState, {
-        getToken: function getToken() {
-          return parseCookies().token;
-        }
+      _this.apolloClient = Object(_initApollo__WEBPACK_IMPORTED_MODULE_19__["default"])(props.apolloState, {
+        getToken: getToken
       });
       return _this;
     }
@@ -361,7 +352,7 @@ function parseCookies(req) {
           apolloClient: this.apolloClient,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 102
+            lineNumber: 89
           },
           __self: this
         }));
@@ -369,8 +360,8 @@ function parseCookies(req) {
     }]);
 
     return WithData;
-  }(react__WEBPACK_IMPORTED_MODULE_18___default.a.Component), Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_14__["default"])(_class, "displayName", "WithData(".concat(App.displayName, ")")), Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_14__["default"])(_class, "propTypes", {
-    apolloState: prop_types__WEBPACK_IMPORTED_MODULE_17___default.a.object.isRequired
+  }(react__WEBPACK_IMPORTED_MODULE_17___default.a.Component), Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_14__["default"])(_class, "displayName", "WithData(".concat(App.displayName, ")")), Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_14__["default"])(_class, "propTypes", {
+    apolloState: prop_types__WEBPACK_IMPORTED_MODULE_16___default.a.object.isRequired
   }), _temp;
 });
 
@@ -3137,7 +3128,7 @@ function previouslyCompared(a, b) {
 /*!*****************************************************!*\
   !*** ./node_modules/apollo-boost/lib/bundle.esm.js ***!
   \*****************************************************/
-/*! exports provided: ApolloClient, ApolloError, FetchType, NetworkStatus, ObservableQuery, isApolloError, Observable, getOperationName, ApolloLink, concat, createOperation, empty, execute, from, fromError, fromPromise, makePromise, split, toPromise, HttpLink, gql, default, HeuristicFragmentMatcher, InMemoryCache, IntrospectionFragmentMatcher, ObjectCache, StoreReader, StoreWriter, WriteError, assertIdValue, defaultDataIdFromObject, defaultNormalizedCacheFactory, enhanceErrorWithDocument */
+/*! exports provided: HttpLink, gql, default, ApolloClient, ApolloError, FetchType, NetworkStatus, ObservableQuery, isApolloError, Observable, getOperationName, ApolloLink, concat, createOperation, empty, execute, from, fromError, fromPromise, makePromise, split, toPromise, HeuristicFragmentMatcher, InMemoryCache, IntrospectionFragmentMatcher, ObjectCache, StoreReader, StoreWriter, WriteError, assertIdValue, defaultDataIdFromObject, defaultNormalizedCacheFactory, enhanceErrorWithDocument */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8347,216 +8338,6 @@ function stripSymbols(data) {
 //# sourceMappingURL=bundle.esm.js.map
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./node_modules/cookie/index.js":
-/*!**************************************!*\
-  !*** ./node_modules/cookie/index.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * cookie
- * Copyright(c) 2012-2014 Roman Shtylman
- * Copyright(c) 2015 Douglas Christopher Wilson
- * MIT Licensed
- */
-
-
-
-/**
- * Module exports.
- * @public
- */
-
-exports.parse = parse;
-exports.serialize = serialize;
-
-/**
- * Module variables.
- * @private
- */
-
-var decode = decodeURIComponent;
-var encode = encodeURIComponent;
-var pairSplitRegExp = /; */;
-
-/**
- * RegExp to match field-content in RFC 7230 sec 3.2
- *
- * field-content = field-vchar [ 1*( SP / HTAB ) field-vchar ]
- * field-vchar   = VCHAR / obs-text
- * obs-text      = %x80-FF
- */
-
-var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
-
-/**
- * Parse a cookie header.
- *
- * Parse the given cookie header string into an object
- * The object has the various cookies as keys(names) => values
- *
- * @param {string} str
- * @param {object} [options]
- * @return {object}
- * @public
- */
-
-function parse(str, options) {
-  if (typeof str !== 'string') {
-    throw new TypeError('argument str must be a string');
-  }
-
-  var obj = {}
-  var opt = options || {};
-  var pairs = str.split(pairSplitRegExp);
-  var dec = opt.decode || decode;
-
-  for (var i = 0; i < pairs.length; i++) {
-    var pair = pairs[i];
-    var eq_idx = pair.indexOf('=');
-
-    // skip things that don't look like key=value
-    if (eq_idx < 0) {
-      continue;
-    }
-
-    var key = pair.substr(0, eq_idx).trim()
-    var val = pair.substr(++eq_idx, pair.length).trim();
-
-    // quoted values
-    if ('"' == val[0]) {
-      val = val.slice(1, -1);
-    }
-
-    // only assign once
-    if (undefined == obj[key]) {
-      obj[key] = tryDecode(val, dec);
-    }
-  }
-
-  return obj;
-}
-
-/**
- * Serialize data into a cookie header.
- *
- * Serialize the a name value pair into a cookie string suitable for
- * http headers. An optional options object specified cookie parameters.
- *
- * serialize('foo', 'bar', { httpOnly: true })
- *   => "foo=bar; httpOnly"
- *
- * @param {string} name
- * @param {string} val
- * @param {object} [options]
- * @return {string}
- * @public
- */
-
-function serialize(name, val, options) {
-  var opt = options || {};
-  var enc = opt.encode || encode;
-
-  if (typeof enc !== 'function') {
-    throw new TypeError('option encode is invalid');
-  }
-
-  if (!fieldContentRegExp.test(name)) {
-    throw new TypeError('argument name is invalid');
-  }
-
-  var value = enc(val);
-
-  if (value && !fieldContentRegExp.test(value)) {
-    throw new TypeError('argument val is invalid');
-  }
-
-  var str = name + '=' + value;
-
-  if (null != opt.maxAge) {
-    var maxAge = opt.maxAge - 0;
-    if (isNaN(maxAge)) throw new Error('maxAge should be a Number');
-    str += '; Max-Age=' + Math.floor(maxAge);
-  }
-
-  if (opt.domain) {
-    if (!fieldContentRegExp.test(opt.domain)) {
-      throw new TypeError('option domain is invalid');
-    }
-
-    str += '; Domain=' + opt.domain;
-  }
-
-  if (opt.path) {
-    if (!fieldContentRegExp.test(opt.path)) {
-      throw new TypeError('option path is invalid');
-    }
-
-    str += '; Path=' + opt.path;
-  }
-
-  if (opt.expires) {
-    if (typeof opt.expires.toUTCString !== 'function') {
-      throw new TypeError('option expires is invalid');
-    }
-
-    str += '; Expires=' + opt.expires.toUTCString();
-  }
-
-  if (opt.httpOnly) {
-    str += '; HttpOnly';
-  }
-
-  if (opt.secure) {
-    str += '; Secure';
-  }
-
-  if (opt.sameSite) {
-    var sameSite = typeof opt.sameSite === 'string'
-      ? opt.sameSite.toLowerCase() : opt.sameSite;
-
-    switch (sameSite) {
-      case true:
-        str += '; SameSite=Strict';
-        break;
-      case 'lax':
-        str += '; SameSite=Lax';
-        break;
-      case 'strict':
-        str += '; SameSite=Strict';
-        break;
-      case 'none':
-        str += '; SameSite=None';
-        break;
-      default:
-        throw new TypeError('option sameSite is invalid');
-    }
-  }
-
-  return str;
-}
-
-/**
- * Try decoding a string using a decoding function.
- *
- * @param {string} str
- * @param {function} decode
- * @private
- */
-
-function tryDecode(str, decode) {
-  try {
-    return decode(str);
-  } catch (e) {
-    return str;
-  }
-}
-
 
 /***/ }),
 
