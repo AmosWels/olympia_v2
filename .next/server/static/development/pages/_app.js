@@ -166,7 +166,7 @@ function create(initialState, {
     return {
       headers: _objectSpread({}, headers, {
         // cookie: token ? `qid=${token}` : "",
-        authorization: token ? `Bearer ${token}` : ""
+        authorization: token ? `${token}` : ""
       })
     };
   }); // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
@@ -248,21 +248,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cookie */ "cookie");
-/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cookie__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/head */ "next/head");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _initApollo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./initApollo */ "./lib/initApollo.ts");
-/* harmony import */ var _isBrowser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./isBrowser */ "./lib/isBrowser.ts");
-/* harmony import */ var _redirect__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./redirect */ "./lib/redirect.ts");
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/head */ "next/head");
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-apollo */ "react-apollo");
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _initApollo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./initApollo */ "./lib/initApollo.ts");
+/* harmony import */ var _isBrowser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./isBrowser */ "./lib/isBrowser.ts");
+/* harmony import */ var _redirect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./redirect */ "./lib/redirect.ts");
 var _jsxFileName = "/Users/amoswelike/projects/olympia_v2/lib/withApollo.tsx";
-var __jsx = react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement;
+var __jsx = react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -280,26 +278,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
-function parseCookies(req, options = {}) {
-  return cookie__WEBPACK_IMPORTED_MODULE_0___default.a.parse(req ? req.headers.cookie || "" : document.cookie, options);
+function getToken() {
+  return JSON.parse(localStorage.getItem('token'));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (App => {
   var _class, _temp;
 
-  return _temp = _class = class WithData extends react__WEBPACK_IMPORTED_MODULE_3___default.a.Component {
+  return _temp = _class = class WithData extends react__WEBPACK_IMPORTED_MODULE_2___default.a.Component {
     static async getInitialProps(ctx) {
       const {
         Component,
         router,
         ctx: {
-          req,
           res
         }
       } = ctx;
-      const apollo = Object(_initApollo__WEBPACK_IMPORTED_MODULE_5__["default"])({}, {
-        getToken: () => parseCookies(req).token
+      const apollo = Object(_initApollo__WEBPACK_IMPORTED_MODULE_4__["default"])({}, {
+        getToken
       });
       ctx.ctx.apolloClient = apollo;
       let appProps = {};
@@ -314,18 +310,18 @@ function parseCookies(req, options = {}) {
         return {};
       }
 
-      if (!_isBrowser__WEBPACK_IMPORTED_MODULE_6__["isBrowser"]) {
+      if (!_isBrowser__WEBPACK_IMPORTED_MODULE_5__["isBrowser"]) {
         // Run all graphql queries in the component tree
         // and extract the resulting data
         try {
           // Run all GraphQL queries
-          await Object(react_apollo__WEBPACK_IMPORTED_MODULE_4__["getDataFromTree"])(__jsx(App, _extends({}, appProps, {
+          await Object(react_apollo__WEBPACK_IMPORTED_MODULE_3__["getDataFromTree"])(__jsx(App, _extends({}, appProps, {
             Component: Component,
             router: router,
             apolloClient: apollo,
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 57
+              lineNumber: 48
             },
             __self: this
           })));
@@ -336,13 +332,13 @@ function parseCookies(req, options = {}) {
           console.error("Error while running `getDataFromTree`", error);
 
           if (error.message.includes("Please Login Again!")) {
-            Object(_redirect__WEBPACK_IMPORTED_MODULE_7__["default"])(ctx.ctx, "/");
+            Object(_redirect__WEBPACK_IMPORTED_MODULE_6__["default"])(ctx.ctx, "/");
           }
         } // getDataFromTree does not call componentWillUnmount
         // head side effect therefore need to be cleared manually
 
 
-        next_head__WEBPACK_IMPORTED_MODULE_1___default.a.rewind();
+        next_head__WEBPACK_IMPORTED_MODULE_0___default.a.rewind();
       } // Extract query data from the Apollo's store
 
 
@@ -358,10 +354,8 @@ function parseCookies(req, options = {}) {
 
       _defineProperty(this, "apolloClient", void 0);
 
-      this.apolloClient = Object(_initApollo__WEBPACK_IMPORTED_MODULE_5__["default"])(props.apolloState, {
-        getToken: () => {
-          return parseCookies().token;
-        }
+      this.apolloClient = Object(_initApollo__WEBPACK_IMPORTED_MODULE_4__["default"])(props.apolloState, {
+        getToken
       });
     }
 
@@ -370,14 +364,14 @@ function parseCookies(req, options = {}) {
         apolloClient: this.apolloClient,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 102
+          lineNumber: 89
         },
         __self: this
       }));
     }
 
   }, _defineProperty(_class, "displayName", `WithData(${App.displayName})`), _defineProperty(_class, "propTypes", {
-    apolloState: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired
+    apolloState: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
   }), _temp;
 });
 
@@ -788,17 +782,6 @@ module.exports = require("apollo-link-error");
 /***/ (function(module, exports) {
 
 module.exports = require("apollo-link-http");
-
-/***/ }),
-
-/***/ "cookie":
-/*!*************************!*\
-  !*** external "cookie" ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("cookie");
 
 /***/ }),
 

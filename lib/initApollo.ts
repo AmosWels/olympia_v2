@@ -18,7 +18,7 @@ import {
   }
   
   interface Options {
-    getToken: () => string;
+    getToken: () => string|null;
   }
   
   function create(initialState: any, { getToken }: Options) {
@@ -47,7 +47,7 @@ import {
         headers: {
           ...headers,
           // cookie: token ? `qid=${token}` : "",
-          authorization: token ? `Bearer ${token}` : ""
+          authorization: token ? `${token}` : ""
         }
       };
     });

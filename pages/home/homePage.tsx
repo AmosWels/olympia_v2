@@ -4,17 +4,19 @@ import HomeBox from '../../components/HomeBox';
 import { Form, Button, ListGroup, Jumbotron, Badge } from "react-bootstrap";
 
 interface Props {
-  data: Object | undefined
+  firstname: string,
+  surname: string,
+  email: string,
+  gender: string,
+  handleClick: any
 }
 
-const HomePage: React.FunctionComponent<Props> = (data) => (
-    <Layout title="Home">
+const HomePage: React.FunctionComponent<Props> = ({firstname,surname,email,gender,handleClick}) => {
+   return( <Layout title="Home">
       <HomeBox>
         <Form>
-        {console.log('>>>>',data)}
-        {console.log('>>>>',data)}
           <Jumbotron>
-            <h1>Hello , You're welcome to <span className="uniqueText">OLYMPIA</span></h1>
+            <h1>Hello <span style={{color:'#ff00ff'}}>{firstname}</span> ,Youre welcome to<span className="uniqueText">OLYMPIA</span></h1>
             <p>
               This is a simple home of Olympia, a safe place where you can open as many emails and
               just be sure to find them again
@@ -23,19 +25,18 @@ const HomePage: React.FunctionComponent<Props> = (data) => (
           <Badge className="BadgeHolder" variant="secondary">This is all that we know about you!</Badge><br />
           <Form.Row>
             <ListGroup className="ListHolder">
-              <ListGroup.Item>Name :Cras justo odio</ListGroup.Item>
-              <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-              <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-              <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-              <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+              <ListGroup.Item>First Name : {firstname}</ListGroup.Item>
+              <ListGroup.Item>Surname : {surname}</ListGroup.Item>
+              <ListGroup.Item>Gender : {gender}</ListGroup.Item>
+              <ListGroup.Item>Email : {email}</ListGroup.Item>
             </ListGroup>
           </Form.Row><br />
           <Form.Row>
-            <Button className="buttonHolder" variant="outline-secondary" href="/">Logout</Button><br />
+            <Button className="buttonHolder" variant="outline-secondary" type='submit' onClick={handleClick}>Logout</Button><br />
           </Form.Row>
         </Form> 
       </HomeBox>
-    </Layout>
-  )
+    </Layout>)
+}
 
 export default HomePage;

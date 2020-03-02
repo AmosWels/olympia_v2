@@ -26,10 +26,9 @@ const Signup: React.FunctionComponent = () => (
                     <Formik
                         onSubmit={async data => {
                             try {
-                                const response = await register({
+                                await register({
                                     variables: data
                                 });
-                                console.log('>>', response);
                                 alert(JSON.stringify('Created Succesfully'));
                                 Router.push("/");
                             } catch (error) {
@@ -173,7 +172,7 @@ const Signup: React.FunctionComponent = () => (
                                                 size="sm"
                                                 role="status"
                                                 aria-hidden="true" />) : null}
-                                            Submit
+                                            Signup
                                         </Button>
                                     </Form.Row>
                                     <Link href="/">

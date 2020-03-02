@@ -1,7 +1,6 @@
 import * as React from "react";
 import { FormikProps, Formik } from "formik";
 import Router from "next/router";
-import { title } from "process";
 import Link from 'next/link';
 import Layout from "../components/Layout";
 import { Form, Button, Spinner } from "react-bootstrap";
@@ -14,6 +13,8 @@ interface ILoginFormValues {
     password: string;
 }
 
+
+
 const Login: React.FunctionComponent = () => (
     <Layout title="Login Page">
         <FormBox>
@@ -21,13 +22,16 @@ const Login: React.FunctionComponent = () => (
                 {login => (
                     <Formik
                         onSubmit={async (data, { setErrors }) => {
-                            console.log('>>', 'response');
                             try {
                                 const response = await login({
                                     variables: data
                                 });
                                 if(response !== 'undefined'){
-                                console.log(response);
+                                let data = response.data
+                                if(data){
+                                    localStorage.setItem('token', JSON.stringify(data.login.token))
+                                }
+                                
                                 }
                                 Router.push("/home");
                             } catch (error) {
@@ -61,7 +65,6 @@ const Login: React.FunctionComponent = () => (
                                             type="text"
                                             placeholder="Enter email"
                                             name="email"
-                                            defaultValue={title}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             value={values.email}
@@ -77,7 +80,6 @@ const Login: React.FunctionComponent = () => (
                                         <Form.Control
                                             type="password"
                                             placeholder="Enter password"
-                                            defaultValue={title}
                                             name="password"
                                             onChange={handleChange}
                                             onBlur={handleBlur}
@@ -101,7 +103,7 @@ const Login: React.FunctionComponent = () => (
                                                 size="sm"
                                                 role="status"
                                                 aria-hidden="true" />) : null}
-                                            Submit
+                                            Login
                                     </Button>
                                     </Form.Row>
                                     <br />
