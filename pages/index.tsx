@@ -1,119 +1,119 @@
 import * as React from "react";
-import { withFormik, FormikProps } from "formik";
-// import { Formik, Field, ErrorMessage, FormikProps } from "formik";
-import * as Yup from "yup";
+import { FormikProps, Formik } from "formik";
+import Router from "next/router";
+import { title } from "process";
 import Link from 'next/link';
 import Layout from "../components/Layout";
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Spinner } from "react-bootstrap";
 import FormBox from "../components/formBox";
+import { loginSchema } from "../utils/validationSchemas";
 import { LoginComponent } from "../generated/apolloComponents";
 
-
-interface FormValues {
+interface ILoginFormValues {
     email: string;
     password: string;
 }
 
-interface OtherProps {
-    title?: string;
-}
-
-interface MyFormProps {
-    initialEmail?: string;
-    initialPassword?: string;
-}
-
-const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-    const {
-        // values,
-        // // errors,
-        // // touched,
-        // handleChange,
-        // handleBlur,
-        handleSubmit,
-        // isSubmitting,
-        title
-    } = props;
-
-    return (
-        <Layout>
-            <FormBox>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label className="required">Email addresss</Form.Label>
-                        <Form.Control 
-                            type="email" 
-                            placeholder="Enter email" 
-                            // onChange={handleChange}
-                            // onBlur={handleBlur}
-                            // value={values.email}
-                             />
-                    </Form.Group>
-
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label className="required">Password</Form.Label>
-                        <Form.Control 
-                            type="password" 
-                            placeholder="Password"
-                            // onChange={handleChange}
-                            // onBlur={handleBlur}
-                            // value={values.password} 
-                            />
-                    </Form.Group>
-                    <Button 
-                        className="buttonHolder"
-                        variant="outline-secondary" 
-                        // type="submit"
-                        href="/home"
-                    //     disabled={
-                    //     isSubmitting ||
-                    //     !!(errors.email && touched.email) ||
-                    //     !!(errors.password && touched.password)
-                    // }
+const Login: React.FunctionComponent = () => (
+    <Layout title="Login Page">
+        <FormBox>
+            <LoginComponent>
+                {login => (
+                    <Formik
+                        onSubmit={async (data, { setErrors }) => {
+                            console.log('>>', 'response');
+                            try {
+                                const response = await login({
+                                    variables: data
+                                });
+                                if(response !== 'undefined'){
+                                console.log(response);
+                                }
+                                Router.push("/home");
+                            } catch (error) {
+                                // alert(JSON.stringify('Wrong Credentials', error));
+                                setErrors({
+                                    email: "invalid login",
+                                    password: "check password"
+                                });
+                            }
+                        }
+                        }
+                        validationSchema={loginSchema}
+                        initialValues={{
+                            email: "",
+                            password: ""
+                        }}
                     >
-                        Submit
-                    </Button><br/>
-                    <Link href="/register">
-                        <a className="text-position">Register</a>
-                    </Link>
-                </Form>
-            </FormBox>
-        <LoginComponent>
-        {(mutate => {
-                    return (<button onClick={async () => {
-                        const response = await mutate({
-                            variables: { email: "gfgh@dfgh.com", password: "gfdfg" }
-                        });
-                        console.log(response);
-                    } }>
-                        call login mutation
-                    </button>);
-        })}
-      </LoginComponent>
-            <h1>{title}</h1>
-        </Layout>
-    );
-};
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            handleBlur,
+                            handleSubmit,
+                            isSubmitting
+                        }: FormikProps<ILoginFormValues>) => (
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group controlId="validationCustom01">
+                                        <Form.Label className="required">Email</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter email"
+                                            name="email"
+                                            defaultValue={title}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.email}
+                                            className={touched.email && errors.email ? "error" : ''}
+                                        />
+                                        {touched.email && errors.email ? (
+                                            <div className="error-message">{errors.email}</div>
+                                        ) : null}
+                                    </Form.Group>
 
-const App = withFormik<MyFormProps, FormValues>({
-    mapPropsToValues: props => ({
-        email: props.initialEmail || "",
-        password: props.initialPassword || ""
-    }),
-
-    validationSchema: Yup.object().shape({
-        email: Yup.string()
-            .email("Email not valid")
-            .required("Email is required"),
-        password: Yup.string().required("Password is required")
-    }),
-
-    handleSubmit(
-        { email, password }: FormValues,
-        // { props, setSubmitting, setErrors }
-    ) {
-        console.log(email, password);
-    }
-})(InnerForm);
-
-export default App;
+                                    <Form.Group controlId="formBasicPassword">
+                                        <Form.Label className="required">Password</Form.Label>
+                                        <Form.Control
+                                            type="password"
+                                            placeholder="Enter password"
+                                            defaultValue={title}
+                                            name="password"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.password}
+                                            className={touched.password && errors.password ? "error" : ''}
+                                        />
+                                        {touched.password && errors.password ? (
+                                            <div className="error-message">{errors.password}</div>
+                                        ) : null}
+                                    </Form.Group><br />
+                                    <Form.Row>
+                                        <Button
+                                            className="buttonHolder"
+                                            variant="outline-secondary"
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                        >
+                                            {isSubmitting ? (<Spinner
+                                                as="span"
+                                                animation="grow"
+                                                size="sm"
+                                                role="status"
+                                                aria-hidden="true" />) : null}
+                                            Submit
+                                    </Button>
+                                    </Form.Row>
+                                    <br />
+                                    <Link href="/register">
+                                        <a className="text-position-login">Register</a>
+                                    </Link>
+                                </Form>
+                            )}
+                    </Formik>
+                )}
+            </LoginComponent>
+        </FormBox>
+    </Layout>
+);
+export default Login;

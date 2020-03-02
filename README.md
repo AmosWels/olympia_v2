@@ -36,3 +36,10 @@ When npm run generate returns errors, run this comman below for each of the plug
 e.g graphql-codegen-typescript-common
 ```
 
+## Checkout App
+
+**Olympia_v2** has been hosted [here](https://olympia-v2-git-addformikk.amoswelike.now.sh/)
+
+I’ve used **Zeit** to deploy the frontend. [zeit.co](zeit.co) for more details about hosting Nextjs apps
+
+
